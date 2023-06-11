@@ -54,6 +54,7 @@ int main (int argc, char *argv[])
     char *word_in = (char *)calloc(6, sizeof(char));
     char input_buf[256] = {0};
     fgets(input_buf, 256, stdin);
+    printf("inputted: %s\n", input_buf);
     
 
 }
