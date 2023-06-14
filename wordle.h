@@ -26,5 +26,6 @@ struct board {
 };
 typedef struct board board_t;
 
+void destroy_trailing_newline(char *str);
 
 #endif // _WORDLE_H_

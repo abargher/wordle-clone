@@ -4,11 +4,9 @@
 #include <stdbool.h>
 #include <termios.h>
 #include <unistd.h>
+#include <ctype.h>
 #include "wordle.h"
 
-
-int main (int argc, char *argv[])
-{
     // static struct termios oldt, newt;
     // int c;
     // /*tcgetattr gets the parameters of the current terminal
@@ -51,10 +49,34 @@ int main (int argc, char *argv[])
     // }
     // return 0;
 
+/* Return whether or not the given string contains only letters. For safety,
+will only evaluate at most len characters. */
+bool is_word(char *str, int len)
+{
+    for (int i = 0; i < len; i++) {
+        if (str[i] == '\0' || str[i] == '\n') {
+           break; 
+        } else if (!isalpha(str[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main (int argc, char *argv[])
+{
+    int tries = 0;
     char *word_in = (char *)calloc(6, sizeof(char));
-    char input_buf[256] = {0};
-    fgets(input_buf, 256, stdin);
-    printf("inputted: %s\n", input_buf);
+    while (tries < 6) {
+        char input_buf[256] = {0};
+        fgets(input_buf, 256, stdin);
+        destroy_trailing_newline(input_buf);
+        printf("inputted: %s\n", input_buf);
+        snprintf(word_in, 6, "%s", input_buf);
+        printf("your input was %s, which is%s a word.\n", word_in, is_word(word_in, 5) ? "" : " not");
+        tries++;
+        memset(word_in, 0, 6);
+    }
     
 
 }
