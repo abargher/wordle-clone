@@ -60,6 +60,11 @@ int main(int argc, char *argv[])
     while (tries < 6) {
         get_next_word(word_in);
         fprintf(stderr, "your input was %s, which is%s a word.\n", word_in, is_word(word_in, 5) ? "" : " not");
+        // evaluate word
+        // update board with word attempt
+            // checks for win condition
+        // display board
+            // if win condition satisfied, display win condition and end game
         tries++;
         memset(word_in, 0, 6);
     }
