@@ -20,4 +20,16 @@ void destroy_trailing_newline(char *str)
     return;
 }
 
+board_t *new_board(char *secret_word)
+{
+    board_t *new = (board_t *)calloc(1, sizeof(board_t));
+    snprintf(new->secret_word, 6, "%s", secret_word);
+    return new;
+}
+
+word_t *evaluate_attempt(char *guess, board_t *board)
+{
+    
+}
+
 

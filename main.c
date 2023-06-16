@@ -7,33 +7,6 @@
 #include <ctype.h>
 #include "wordle.h"
 
-    // static struct termios oldt, newt;
-    // int c;
-    // /*tcgetattr gets the parameters of the current terminal
-    // STDIN_FILENO will tell tcgetattr that it should write the settings
-    // of stdin to oldt*/
-    // tcgetattr(STDIN_FILENO, &oldt);
-    // /*now the settings will be copied*/
-    // newt = oldt;
-
-    // /*ICANON normally takes care that one line at a time will be processed
-    // that means it will return if it sees a "\n" or an EOF or an EOL*/
-    // newt.c_lflag &= ~(ICANON);          
-
-    // /*Those new settings will be set to STDIN
-    // TCSANOW tells tcsetattr to change attributes immediately. */
-    // tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
-    // /*This is your part:
-    // I choose 'e' to end input. Notice that EOF is also turned off
-    // in the non-canonical mode*/
-    // while((c=getchar())!= 'e')      
-    //     printf("0x%x\n",c);
-    //     // putchar(c);                 
-
-    // /*restore the old settings*/
-    // tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-
 /* Psuedo code sketch of main gameplay loop: */
 
     // int tries = 0;
@@ -63,20 +36,32 @@ bool is_word(char *str, int len)
     return true;
 }
 
-int main (int argc, char *argv[])
+void lowercase(char *str)
+{
+    int len = strlen(str);
+    for (int i = 0; i < len; i++)
+        str[i] = tolower(str[i]);
+    return;
+}
+
+char *get_next_word(char *out_word)
+{
+    char input_buf[6] = {0};
+    fgets(input_buf, 6, stdin);
+    lowercase(input_buf);
+    snprintf(out_word, 6, "%s", input_buf);
+    return out_word;
+}
+
+int main(int argc, char *argv[])
 {
     int tries = 0;
     char *word_in = (char *)calloc(6, sizeof(char));
     while (tries < 6) {
-        char input_buf[256] = {0};
-        fgets(input_buf, 256, stdin);
-        destroy_trailing_newline(input_buf);
-        printf("inputted: %s\n", input_buf);
-        snprintf(word_in, 6, "%s", input_buf);
-        printf("your input was %s, which is%s a word.\n", word_in, is_word(word_in, 5) ? "" : " not");
+        get_next_word(word_in);
+        fprintf(stderr, "your input was %s, which is%s a word.\n", word_in, is_word(word_in, 5) ? "" : " not");
         tries++;
         memset(word_in, 0, 6);
     }
-    
 
 }
