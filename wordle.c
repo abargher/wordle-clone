@@ -29,7 +29,7 @@ board_t *new_board(char *secret_word)
 
 word_t *evaluate_attempt(char *guess, board_t *board)
 {
-    
+    return NULL;
 }
 
 

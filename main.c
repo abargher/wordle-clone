@@ -68,5 +68,5 @@ int main(int argc, char *argv[])
         tries++;
         memset(word_in, 0, 6);
     }
-
+    return 0;
 }
